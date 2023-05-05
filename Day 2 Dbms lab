@@ -1,0 +1,300 @@
+mysql> use dinesh;
+Database changed
+mysql> use mitta;
+ERROR 1049 (42000): Unknown database 'mitta'
+mysql> use DBMS;
+ERROR 1049 (42000): Unknown database 'dbms'
+mysql> use Dinesh;
+Database changed
+mysql> show tables;
++------------------+
+| Tables_in_dinesh |
++------------------+
+| slot_a           |
++------------------+
+1 row in set (0.00 sec)
+mysql> create database DBMS;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use DBMS;
+Database changed
+mysql> create table customer(cid int,name varchar(10),salary int);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into customer values((190,'mitta',10000),(191,'mahi',11000));
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> insert into customer values(190,'mitta',10000);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from customer;
++------+-------+--------+
+| cid  | name  | salary |
++------+-------+--------+
+|  190 | mitta |  10000 |
++------+-------+--------+
+1 row in set (0.02 sec)
+
+mysql> select cid from customer;
++------+
+| cid  |
++------+
+|  190 |
++------+
+1 row in set (0.00 sec)
+
+mysql> select salary*0.5 from customer;
++------------+
+| salary*0.5 |
++------------+
+|     5000.0 |
++------------+
+1 row in set (0.01 sec)
+
+mysql> select cid,name,salary,salary*0.5 as newsalary from customer;
++------+-------+--------+-----------+
+| cid  | name  | salary | newsalary |
++------+-------+--------+-----------+
+|  190 | mitta |  10000 |    5000.0 |
++------+-------+--------+-----------+
+1 row in set (0.00 sec)
+mysql> create database DBMS;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use DBMS;
+Database changed
+mysql> create table customer(cid int,name varchar(10),salary int);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into customer values((190,'mitta',10000),(191,'mahi',11000));
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> insert into customer values(190,'mitta',10000);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from customer;
++------+-------+--------+
+| cid  | name  | salary |
++------+-------+--------+
+|  190 | mitta |  10000 |
++------+-------+--------+
+1 row in set (0.02 sec)
+
+mysql> select cid from customer;
++------+
+| cid  |
++------+
+|  190 |
++------+
+1 row in set (0.00 sec)
+
+mysql> select salary*0.5 from customer;
++------------+
+| salary*0.5 |
++------------+
+|     5000.0 |
++------------+
+1 row in set (0.01 sec)
+
+mysql> select cid,name,salary,salary*0.5 as newsalary from customer;
++------+-------+--------+-----------+
+| cid  | name  | salary | newsalary |
++------+-------+--------+-----------+
+|  190 | mitta |  10000 |    5000.0 |
++------+-------+--------+-----------+
+1 row in set (0.00 sec)
+mysql> select * from customer where salary>=1000;
++------+-------+--------+
+| cid  | name  | salary |
++------+-------+--------+
+|  190 | mitta |  10000 |
++------+-------+--------+
+1 row in set (0.01 sec)
+
+mysql> select * from customer;
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  190 | mitta |  10000 | NULL   |
++------+-------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> select distinct cid from customer;
++------+
+| cid  |
++------+
+|  190 |
++------+
+1 row in set (0.01 sec)
+mysql> insert into customer (cid,name,salary,branch) values(191,'oddo',11000,'hyd'),(192,'hari',12000,'delhi'),(193,'kredo',10000,'goa');
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from customer;
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  190 | mitta |  10000 | NULL   |
+|  191 | oddo  |  11000 | hyd    |
+|  192 | hari  |  12000 | delhi  |
+|  193 | kredo |  10000 | goa    |
++------+-------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer order by salary desc;
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  192 | hari  |  12000 | delhi  |
+|  191 | oddo  |  11000 | hyd    |
+|  190 | mitta |  10000 | NULL   |
+|  193 | kredo |  10000 | goa    |
++------+-------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer order by salary asc;;
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  190 | mitta |  10000 | NULL   |
+|  193 | kredo |  10000 | goa    |
+|  191 | oddo  |  11000 | hyd    |
+|  192 | hari  |  12000 | delhi  |
++------+-------+--------+--------+
+4 rows in set (0.00 sec)
+
+ERROR:
+No query specified
+
+mysql> select * from customer order by salary asc;
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  190 | mitta |  10000 | NULL   |
+|  193 | kredo |  10000 | goa    |
+|  191 | oddo  |  11000 | hyd    |
+|  192 | hari  |  12000 | delhi  |
++------+-------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer order by branch asc;
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  190 | mitta |  10000 | NULL   |
+|  192 | hari  |  12000 | delhi  |
+|  193 | kredo |  10000 | goa    |
+|  191 | oddo  |  11000 | hyd    |
++------+-------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer order by salary desc;
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  192 | hari  |  12000 | delhi  |
+|  191 | oddo  |  11000 | hyd    |
+|  190 | mitta |  10000 | NULL   |
+|  193 | kredo |  10000 | goa    |
++------+-------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer where cid between 192 and 193 salary desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL
+server version for the right syntax to use near 'salary desc' at line 1
+mysql> select * from customer where cid between 192 and 193;
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  192 | hari  |  12000 | delhi  |
+|  193 | kredo |  10000 | goa    |
++------+-------+--------+--------+
+2 rows in set (0.00 sec)
+mysql> select count(distinct cid) from customer;
++---------------------+
+| count(distinct cid) |
++---------------------+
+|                   1 |
++---------------------+
+1 row in set (0.00 sec)
+mysql> insert into customer (cid,name,salary,branch) values(191,'oddo',11000,'hyd'),(192,'hari',12000,'delhi'),(193,'kredo',10000,'goa');
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from customer;
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  190 | mitta |  10000 | NULL   |
+|  191 | oddo  |  11000 | hyd    |
+|  192 | hari  |  12000 | delhi  |
+|  193 | kredo |  10000 | goa    |
++------+-------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer order by salary desc;
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  192 | hari  |  12000 | delhi  |
+|  191 | oddo  |  11000 | hyd    |
+|  190 | mitta |  10000 | NULL   |
+|  193 | kredo |  10000 | goa    |
++------+-------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer order by salary asc;;
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  190 | mitta |  10000 | NULL   |
+|  193 | kredo |  10000 | goa    |
+|  191 | oddo  |  11000 | hyd    |
+|  192 | hari  |  12000 | delhi  |
++------+-------+--------+--------+
+4 rows in set (0.00 sec)
+
+ERROR:
+No query specified
+
+mysql> select * from customer order by salary asc;
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  190 | mitta |  10000 | NULL   |
+|  193 | kredo |  10000 | goa    |
+|  191 | oddo  |  11000 | hyd    |
+|  192 | hari  |  12000 | delhi  |
++------+-------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer order by branch asc;
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  190 | mitta |  10000 | NULL   |
+|  192 | hari  |  12000 | delhi  |
+|  193 | kredo |  10000 | goa    |
+|  191 | oddo  |  11000 | hyd    |
++------+-------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer order by salary desc;
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  192 | hari  |  12000 | delhi  |
+|  191 | oddo  |  11000 | hyd    |
+|  190 | mitta |  10000 | NULL   |
+|  193 | kredo |  10000 | goa    |
++------+-------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer where cid between 192 and 193 salary desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'salary desc' at line 1
+mysql> select * from customer where cid between 192 and 193;
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  192 | hari  |  12000 | delhi  |
+|  193 | kredo |  10000 | goa    |
++------+-------+--------+--------+
+2 rows in set (0.00 sec)

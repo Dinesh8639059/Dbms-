@@ -1,0 +1,226 @@
+mysql> use dinesh;
+Database changed
+mysql> use dbms;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_dbms |
++----------------+
+| customer       |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer;
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  190 | mitta |  10000 | NULL   |
+|  191 | oddo  |  11000 | hyd    |
+|  192 | hari  |  12000 | delhi  |
+|  193 | kredo |  10000 | goa    |
++------+-------+--------+--------+
+4 rows in set (0.02 sec)
+
+mysql> select  * from customer where cid between 190 and 192;
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  190 | mitta |  10000 | NULL   |
+|  191 | oddo  |  11000 | hyd    |
+|  192 | hari  |  12000 | delhi  |
++------+-------+--------+--------+
+3 rows in set (0.02 sec)
+
+mysql> select * from customer where name like 'j%';
+Empty set (0.00 sec)
+
+mysql> select * from customer where name like 'h%';
++------+------+--------+--------+
+| cid  | name | salary | branch |
++------+------+--------+--------+
+|  192 | hari |  12000 | delhi  |
++------+------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer where name like '%d%';
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  191 | oddo  |  11000 | hyd    |
+|  193 | kredo |  10000 | goa    |
++------+-------+--------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from customer where name like '%o';
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  191 | oddo  |  11000 | hyd    |
+|  193 | kredo |  10000 | goa    |
++------+-------+--------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from customer where name like '%d__';
++------+------+--------+--------+
+| cid  | name | salary | branch |
++------+------+--------+--------+
+|  191 | oddo |  11000 | hyd    |
++------+------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer where name like '%_';
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  190 | mitta |  10000 | NULL   |
+|  191 | oddo  |  11000 | hyd    |
+|  192 | hari  |  12000 | delhi  |
+|  193 | kredo |  10000 | goa    |
++------+-------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer where name like '_itta';
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  190 | mitta |  10000 | NULL   |
++------+-------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer where name like '_it%';
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  190 | mitta |  10000 | NULL   |
++------+-------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer where name like '_kr%';
+Empty set (0.00 sec)
+
+mysql> select * from customer where name like '_re%';
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  193 | kredo |  10000 | goa    |
++------+-------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer where name like 19;
+Empty set (0.00 sec)
+
+mysql> select * from customer where name like '_el__';
+Empty set (0.00 sec)
+
+mysql> select * from customer where name like '19_';
+Empty set (0.00 sec)
+
+mysql> select * from customer where name like '19%';
+Empty set (0.00 sec)
+
+mysql> select * from customer where name like '_9_%';
+Empty set (0.00 sec)
+
+
+mysql> select * from customer where name like '1_0';
+Empty set (0.00 sec)
+
+mysql> select * from customer where cid like '1_0';
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  190 | mitta |  10000 | NULL   |
++------+-------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> select  * from customer where cid not between 190 and 192;
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  193 | kredo |  10000 | goa    |
++------+-------+--------+--------+
+1 row in set (0.00 sec)
+
+
+mysql> select * from customer where cid between 190 and 192 and salary in(10000,11000);
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  190 | mitta |  10000 | NULL   |
+|  191 | oddo  |  11000 | hyd    |
++------+-------+--------+--------+
+2 rows in set (0.00 sec)
+mysql> select * from customer where cid between 190 and 192 and salary in(10000,11000) order by cid;
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  190 | mitta |  10000 | NULL   |
+|  191 | oddo  |  11000 | hyd    |
++------+-------+--------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from customer where cid between 190 and 192 and salary in(10000,11000) order by cid desc;
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  191 | oddo  |  11000 | hyd    |
+|  190 | mitta |  10000 | NULL   |
++------+-------+--------+--------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql> select count(name) from customer;
++-------------+
+| count(name) |
++-------------+
+|           4 |
++-------------+
+1 row in set (0.02 sec)
+
+mysql> select count(name) from customer where name='oddo';
++-------------+
+| count(name) |
++-------------+
+|           1 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select min(name) from customer;
++-----------+
+| min(name) |
++-----------+
+| hari      |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select min(salary) from customer;
++-------------+
+| min(salary) |
++-------------+
+|       10000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select max(salary) from customer;
++-------------+
+| max(salary) |
++-------------+
+|       12000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(salary) from customer;
++-------------+
+| sum(salary) |
++-------------+
+|       43000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(salary) from customer;
++-------------+
+| avg(salary) |
++-------------+
+|  10750.0000 |
++-------------+
+1 row in set (0.00 sec)

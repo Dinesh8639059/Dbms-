@@ -1,0 +1,134 @@
+mysql> use DBMs;
+Database changed
+mysql> select * from customer;
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  190 | mitta |  10000 | goa    |
+|  191 | oddo  |  11000 | hyd    |
+|  192 | hari  |  12000 | delhi  |
+|  193 | kredo |  10000 | goa    |
++------+-------+--------+--------+
+4 rows in set (0.01 sec)
+
+mysql> select * from customer group by branch;
++------+-------+--------+--------+
+| cid  | name  | salary | branch |
++------+-------+--------+--------+
+|  192 | hari  |  12000 | delhi  |
+|  190 | mitta |  10000 | goa    |
+|  191 | oddo  |  11000 | hyd    |
++------+-------+--------+--------+
+3 rows in set (0.01 sec)
+
+mysql> select count(branch), branch from customer group by branch;
++---------------+--------+
+| count(branch) | branch |
++---------------+--------+
+|             1 | delhi  |
+|             2 | goa    |
+|             1 | hyd    |
++---------------+--------+
+3 rows in set (0.01 sec)
+mysql> insert into customer values(195,'akhil',16000,'uppugndr');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from customer;
++------+-------+--------+----------+
+| cid  | name  | salary | branch   |
++------+-------+--------+----------+
+|  190 | mitta |  10000 | goa      |
+|  191 | oddo  |  11000 | hyd      |
+|  192 | hari  |  12000 | delhi    |
+|  193 | kredo |  10000 | goa      |
+|  195 | akhil |  16000 | uppugndr |
++------+-------+--------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from customer group by branch;
++------+-------+--------+----------+
+| cid  | name  | salary | branch   |
++------+-------+--------+----------+
+|  192 | hari  |  12000 | delhi    |
+|  190 | mitta |  10000 | goa      |
+|  191 | oddo  |  11000 | hyd      |
+|  195 | akhil |  16000 | uppugndr |
++------+-------+--------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer group by branch having salary>10000 ;
++------+-------+--------+----------+
+| cid  | name  | salary | branch   |
++------+-------+--------+----------+
+|  192 | hari  |  12000 | delhi    |
+|  191 | oddo  |  11000 | hyd      |
+|  195 | akhil |  16000 | uppugndr |
++------+-------+--------+----------+
+3 rows in set (0.00 sec)
+mysql> select count(branch) from customer group by branch ;
++---------------+
+| count(branch) |
++---------------+
+|             1 |
+|             2 |
+|             1 |
+|             1 |
++---------------+
+4 rows in set (0.00 sec)
+
+mysql> select count(branch),branch from customer group by branch ;
++---------------+----------+
+| count(branch) | branch   |
++---------------+----------+
+|             1 | delhi    |
+|             2 | goa      |
+|             1 | hyd      |
+|             1 | uppugndr |
++---------------+----------+
+4 rows in set (0.00 sec)
+mysql> select branch,salary from customer group by branch,salary having salary>10000 ;
++----------+--------+
+| branch   | salary |
++----------+--------+
+| delhi    |  12000 |
+| hyd      |  11000 |
+| uppugndr |  16000 |
++----------+--------+
+3 rows in set (0.00 sec)
+mysql> select count(branch),branch,salary from customer group by branch,salary having salary>10000 ;
++---------------+----------+--------+
+| count(branch) | branch   | salary |
++---------------+----------+--------+
+|             1 | delhi    |  12000 |
+|             1 | hyd      |  11000 |
+|             1 | uppugndr |  16000 |
++---------------+----------+--------+
+3 rows in set (0.00 sec)
+mysql> select * from customer where salary=(select max(salary) from customer);
++------+-------+--------+----------+
+| cid  | name  | salary | branch   |
++------+-------+--------+----------+
+|  195 | akhil |  16000 | uppugndr |
++------+-------+--------+----------+
+1 row in set (0.02 sec)
+mysql> select cid,name from customer where branch in
+    -> (select branch from customer where salary in(10000,13000));
++------+-------+
+| cid  | name  |
++------+-------+
+|  190 | mitta |
+|  193 | kredo |
++------+-------+
+2 rows in set (0.01 sec)
+
+mysql> select cid,name from customer where branch in
+    -> (select branch from customer where salary in(10000,16000));
++------+-------+
+| cid  | name  |
++------+-------+
+|  190 | mitta |
+|  193 | kredo |
+|  195 | akhil |
++------+-------+
+3 rows in set (0.00 sec)
+mysql>

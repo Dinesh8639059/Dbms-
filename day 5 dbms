@@ -1,0 +1,286 @@
+mysql> use dbms;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_dbms |
++----------------+
+| customer       |
+| dinoview       |
+| dinuview       |
+| employe        |
+| rakeshview     |
+| rakuview       |
++----------------+
+6 rows in set (0.00 sec)
+
+mysql> show index from customer;
++----------+------------+----------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| Table    | Non_unique | Key_name       | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment |
++----------+------------+----------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| customer |          1 | customer_index |            1 | cid         | A         |           5 |     NULL | NULL   | YES  | BTREE      |         |               |
++----------+------------+----------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+1 row in set (0.00 sec)
+
+mysql> drop index customer_index;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> alter table drop index customer_index;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'drop index customer_index' at line 1
+mysql> alter table drop index customer_index from customer;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'drop index customer_index from customer' at line 1
+mysql> alter table customer drop index customer_index from;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from' at line 1
+mysql> alter table customer drop index customer_index;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employe;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| cid    | int(11)     | YES  |     | NULL    |       |
+| ename  | varchar(10) | YES  |     | NULL    |       |
+| income | int(11)     | YES  |     | NULL    |       |
+| native | varchar(10) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.04 sec)
+
+mysql> create index employindex on employe(cid);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table employ add index(emame);
+ERROR 1146 (42S02): Table 'dbms.employ' doesn't exist
+mysql> alter table employ add index index(emame);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'index(emame)' at line 1
+mysql> alter table employ add index employindex(emame);
+ERROR 1146 (42S02): Table 'dbms.employ' doesn't exist
+mysql> alter table employe add index employeindex(emame);
+ERROR 1072 (42000): Key column 'emame' doesn't exist in table
+mysql> alter table employe add index employeindex(ename);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show index from employindex;
+ERROR 1146 (42S02): Table 'dbms.employindex' doesn't exist
+mysql> show index from employ;
+ERROR 1146 (42S02): Table 'dbms.employ' doesn't exist
+mysql> show index from employe;
++---------+------------+--------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| Table   | Non_unique | Key_name     | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment |
++---------+------------+--------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| employe |          1 | employindex  |            1 | cid         | A         |           4 |     NULL | NULL   | YES  | BTREE      |         |
+   |
+| employe |          1 | employeindex |            1 | ename       | A         |           4 |     NULL | NULL   | YES  | BTREE      |         |
+   |
++---------+------------+--------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+2 rows in set (0.00 sec)
+
+mysql>
+
+seelect * from customer;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'seelect * from customer' at line 1
+mysql> select * from customer;
++------+-------+--------+----------+
+| cid  | name  | salary | branch   |
++------+-------+--------+----------+
+|  190 | mitta |  10000 | goa      |
+|  191 | oddo  |  11000 | hyd      |
+|  192 | hari  |  12000 | delhi    |
+|  193 | kredo |  10000 | goa      |
+|  195 | akhil |  16000 | uppugndr |
++------+-------+--------+----------+
+5 rows in set (0.01 sec)
+
+mysql> select cid,salary
+    -> case
+    -> when cid<192 then 'salary is below 12000'
+    -> when cid=192 then 'salary is equalto 12000'
+    -> when cid>192 then 'salary is above  12000'
+    -> end
+    -> from customer;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'case
+when cid<192 then 'salary is below 12000'
+when cid=192 then 'salary is equa' at line 2
+mysql> select cid,salary
+    -> case
+    -> when cid<192 then 'salary is below 12000'
+    -> when cid=192 then 'salary is equalto 12000'
+    -> else 'salary is more than 12000'
+    -> end
+    -> from customer;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'case
+when cid<192 then 'salary is below 12000'
+when cid=192 then 'salary is equa' at line 2
+mysql> select cid,salary
+    -> case
+    ->      when cid<192 then 'salary is below 12000'
+    ->      when cid=192 then 'salary is equalto 12000'
+    -> else 'salary is more than 12000'
+    -> end
+    -> from customer;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'case
+     when cid<192 then 'salary is below 12000'
+     when cid=192 then 'sala' at line 2
+mysql> select cid,salary,
+    -> case
+    -> when cid<192 then 'salary is below 12000'
+    -> when cid=192 then 'salary is equalto 12000'
+    -> else 'salary is more than 12000'
+    -> end
+    -> from customer;
++------+--------+---------------------------------------------------------------------------------------------------------------------------------+
+| cid  | salary | case
+when cid<192 then 'salary is below 12000'
+when cid=192 then 'salary is equalto 12000'
+else 'salary is more than 12000'
+end |
++------+--------+---------------------------------------------------------------------------------------------------------------------------------+
+|  190 |  10000 | salary is below 12000                                                                                                           |
+|  191 |  11000 | salary is below 12000                                                                                                           |
+|  192 |  12000 | salary is equalto 12000                                                                                                         |
+|  193 |  10000 | salary is more than 12000                                                                                                       |
+|  195 |  16000 | salary is more than 12000                                                                                                       |
++------+--------+---------------------------------------------------------------------------------------------------------------------------------+
+5 rows in set (0.01 sec)
+
+mysql> select * from employe;
++------+-------+--------+---------+
+| cid  | ename | income | native  |
++------+-------+--------+---------+
+|  190 | savi  |   1000 | thand   |
+|  191 | ammu  |   2000 | amerpet |
+|  192 | kavi  |   4000 | rmlkt   |
+|  193 | sofi  | 100000 | brpalli |
++------+-------+--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select ename,native,income
+    -> from employe
+    -> order by (case when ename is sofi then country else city end);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sofi then country else city end)' at line 3
+mysql> select ename,native,income
+    -> order by (case when ename is 'sofi' then country else city end);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''sofi' then country else city end)' at line 2
+mysql> order by (case when ename is null then country else city end);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order by (case when ename is null then country else city end)' at line 1
+mysql> select ename,native,income
+    -> order by (case when ename is 'sofi' then country else city end);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''sofi' then country else city end)' at line 2
+mysql> select ename,native,income
+    -> order by (case when ename is 'sofi' then country else city end);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''sofi' then country else city end)' at line 2
+mysql> select ename,native,income
+    -> order by (case when ename is 'sofi' then country else city end);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''sofi' then country else city end)' at line 2
+mysql> select ename,native,income
+    -> order by (case when ename is 'sofi' then country else city end)
+    -> order by (case when ename is 'sofi' then country else city end);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''sofi' then country else city end)
+order by (case when ename is 'sofi' then coun' at line 2
+mysql> select ename,native,income
+    -> order by
+    -> (case
+    -> when native is null then country
+    -> else city
+    -> end);
+ERROR 1054 (42S22): Unknown column 'ename' in 'field list'
+mysql> select ename,native,income
+    -> from employe
+    -> (case
+    -> when native is null then country
+    -> else city
+    -> end);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(case
+when native is null then country
+else city
+end)' at line 3
+mysql> select ename,native,income
+    -> from employe,
+    -> (case
+    -> when native is null then country;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'case
+when native is null then country' at line 3
+mysql> select ename,native,income
+    -> from employe,
+    -> order by
+    -> (case
+    -> when native is null then country
+    -> else city
+    -> end);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order by
+(case
+when native is null then country
+else city
+end)' at line 3
+mysql> create table student(regno int,name varchar(1o),totakmak int,grade varchar (5));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1o),totakmak int,grade varchar (5))' at line 1
+mysql> create table student(regno int,name varchar(10),totakmak int,grade varchar (5));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc student;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| regno    | int(11)     | YES  |     | NULL    |       |
+| name     | varchar(10) | YES  |     | NULL    |       |
+| totakmak | int(11)     | YES  |     | NULL    |       |
+| grade    | varchar(5)  | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.02 sec)
+
+mysql> insert into student(regno,name,totalmak,grade) values(001,'dinesh',999,'A++'),(002,'prasanth',999,'A++'),(003,'niru',900,'A+'),(004,'ayya',850,'A'),(005,'azhar',750,'b'),(006,'mophra',600,'c'),(007,'karu',500,'d'),(008,'tagu',450,'f');
+ERROR 1054 (42S22): Unknown column 'totalmak' in 'field list'
+mysql> insert into student(regno,name,totakmak,grade) values(001,'dinesh',999,'A++'),(002,'prasanth',999,'A++'),(003,'niru',900,'A+'),(004,'ayya',850,'A'),(005,'azhar',750,'b'),(006,'mophra',600,'c'),(007,'karu',500,'d'),(008,'tagu',450,'f');
+Query OK, 8 rows affected (0.02 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> select from student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from student' at line 1
+mysql> select * from student;
++-------+----------+----------+-------+
+| regno | name     | totakmak | grade |
++-------+----------+----------+-------+
+|     1 | dinesh   |      999 | A++   |
+|     2 | prasanth |      999 | A++   |
+|     3 | niru     |      900 | A+    |
+|     4 | ayya     |      850 | A     |
+|     5 | azhar    |      750 | b     |
+|     6 | mophra   |      600 | c     |
+|     7 | karu     |      500 | d     |
+|     8 | tagu     |      450 | f     |
++-------+----------+----------+-------+
+8 rows in set (0.00 sec)
+
+mysql> select totakmak,grade,
+    -> case
+    -> grade
+    -> when 'A++' then 'distnction';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 4
+mysql> select totakmak,grade,
+    -> case
+    -> grade
+    -> when 'A++' then 'distnction'
+    -> when 'A+' then 'firstclass'
+    -> when 'A' then 'firstclass2'
+    -> when 'b' then 'second class'
+    -> when 'c' then 'third class'
+    -> when 'd' then 'fourth class'
+    -> when 'f' then 'fail'
+    -> else 'none'
+    -> end as class
+    -> from student;
++----------+-------+--------------+
+| totakmak | grade | class        |
++----------+-------+--------------+
+|      999 | A++   | distnction   |
+|      999 | A++   | distnction   |
+|      900 | A+    | firstclass   |
+|      850 | A     | firstclass2  |
+|      750 | b     | second class |
+|      600 | c     | third class  |
+|      500 | d     | fourth class |
+|      450 | f     | fail         |
++----------+-------+--------------+
+8 rows in set (0.00 sec)
+
+mysql>
